@@ -13,6 +13,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Persistence;
 using Microsoft.EntityFrameworkCore;
+using MediatR;
+using Application.Bookings;
+using Application.Core;
 
 namespace API
 {
@@ -31,7 +34,7 @@ namespace API
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Covidility", Version = "v1" });
             });
 
             services.AddDbContext<DataContext>(options => {
@@ -44,6 +47,9 @@ namespace API
                     policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
                 });
             });
+
+            services.AddMediatR(typeof(List.Handler).Assembly);
+            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
