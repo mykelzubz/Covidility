@@ -4,9 +4,10 @@ import { Booking } from "../../../app/models/booking";
 
 interface Props {
   bookings: Booking[];
+  selectBooking: (id: string) => void;
 }
 
-export default function BookingList({ bookings }: Props) {
+export default function BookingList({ bookings, selectBooking }: Props) {
   return (
     <Segment>
       <Item.Group divided>
@@ -24,7 +25,7 @@ export default function BookingList({ bookings }: Props) {
                 <div><strong>Test Result:</strong> {booking.result}</div>
               </Item.Description> */}
               <Item.Extra>
-                <Button floated="right" content="View" color="black"></Button>
+                <Button onClick={() => selectBooking(booking.id)} floated="right" content="View" color="black"></Button>
                 <Label basic content={booking.bookingStatus} />
               </Item.Extra>
             </Item.Content>

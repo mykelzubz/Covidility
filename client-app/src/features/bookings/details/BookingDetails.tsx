@@ -1,15 +1,19 @@
 import React from "react";
-import { Button, Card, Icon, Image, Label } from "semantic-ui-react";
+import { Button, Card, Label } from "semantic-ui-react";
 import { Booking } from "../../../app/models/booking";
 
 interface Props {
   booking: Booking;
+  cancelSelectBooking: () => void;
+  openForm: (id: string) => void;
 }
 
-export default function BookingDetails({ booking }: Props) {
+export default function BookingDetails({
+  booking,
+  cancelSelectBooking,
+}: Props) {
   return (
     <Card fluid>
-      {/* <Image src="/images/avatar/large/matthew.png" wrapped ui={false} /> */}
       <Card.Content>
         <Card.Header>
           {booking.firstName} {booking.lastName}
@@ -34,8 +38,20 @@ export default function BookingDetails({ booking }: Props) {
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        {booking.bookingStatus !== "CANCELLED" ? (
-          <Button basic floated="right" color="red" content="Cancel Booking" />
+        <Button
+          onClick={cancelSelectBooking}
+          basic
+          floated="right"
+          color="red"
+          content="Close"
+        />
+
+        {booking.bookingStatus === "PENDING" ? (
+          <Button
+            floated="right"
+            color="red"
+            content="Cancel Booking"
+          />
         ) : (
           ""
         )}

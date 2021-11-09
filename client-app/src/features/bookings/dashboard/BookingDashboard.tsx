@@ -1,22 +1,48 @@
 import React from "react";
-import { Grid, List } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import { Booking } from "../../../app/models/booking";
 import BookingDetails from "../details/BookingDetails";
+import BookingForm from "../form/BookingForm";
 import BookingList from "./BookingList";
 
 interface Props {
   bookings: Booking[];
+  selectedBooking: Booking | undefined;
+  selectBooking: (id: string) => void;
+  cancelSelectBooking: () => void;
+  editMode: boolean;
+  openForm: (id: string) => void;
+  closeForm: () => void;
+  createBooking: (booking: Booking) => void;
 }
 
-export default function BookingDashboard({ bookings }: Props) {
+export default function BookingDashboard({
+  bookings,
+  selectedBooking,
+  selectBooking,
+  cancelSelectBooking,
+  editMode,
+  openForm,
+  closeForm,
+  createBooking
+}: Props) {
   return (
     <Grid>
       <Grid.Column width="7">
-        <BookingList bookings={bookings} />
+        <BookingList bookings={bookings} selectBooking={selectBooking} />
       </Grid.Column>
 
       <Grid.Column width="9">
-        {bookings[1] && <BookingDetails booking={bookings[1]} />}
+        {selectedBooking && !editMode && (
+          <BookingDetails
+            booking={selectedBooking}
+            cancelSelectBooking={cancelSelectBooking}
+            openForm={openForm}
+          />
+        )}
+        {editMode && (
+          <BookingForm closeForm={closeForm} booking={selectedBooking} createBooking={createBooking} />
+        )}
       </Grid.Column>
     </Grid>
   );
