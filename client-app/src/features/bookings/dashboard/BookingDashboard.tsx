@@ -14,6 +14,7 @@ interface Props {
   openForm: (id: string) => void;
   closeForm: () => void;
   createBooking: (booking: Booking) => void;
+  submitting: boolean;
 }
 
 export default function BookingDashboard({
@@ -24,7 +25,8 @@ export default function BookingDashboard({
   editMode,
   openForm,
   closeForm,
-  createBooking
+  createBooking,
+  submitting,
 }: Props) {
   return (
     <Grid>
@@ -41,7 +43,12 @@ export default function BookingDashboard({
           />
         )}
         {editMode && (
-          <BookingForm closeForm={closeForm} booking={selectedBooking} createBooking={createBooking} />
+          <BookingForm
+            closeForm={closeForm}
+            booking={selectedBooking}
+            createBooking={createBooking}
+            submitting={submitting}
+          />
         )}
       </Grid.Column>
     </Grid>

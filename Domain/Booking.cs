@@ -15,7 +15,7 @@ namespace Domain
         public string Location { get; set; }
         public DateTime TestDate { get; set; }
         public string Result { get; set; }
-        public string BookingStatus { get; set; }
-        public DateTime BookingDate { get; set; }
+        public string BookingStatus { get; set; } = "PENDING";
+        public DateTime BookingDate { get; set; } = DateTime.Now;
     }
 }
