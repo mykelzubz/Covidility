@@ -1,7 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Booking } from "../models/booking";
-import { v4 as uuid } from "uuid";
 import axios from "axios";
 
 export default class BookingStore {
@@ -42,12 +41,17 @@ export default class BookingStore {
         let booking = this.getBooking(id);
         if(booking) {
             this.selectedBooking = booking;
+            return booking;
         } else {
             this.loadingInitial = true;
             try {
                 booking = await agent.Bookings.details(id);
                 this.setBooking(booking);
+                runInAction(() => {
+                    this.selectedBooking = booking;
+                });                
                 this.setLoadingInitial(false)
+                return booking;
             } catch(error) {
                 console.log(error);
                 this.setLoadingInitial(false)
@@ -71,9 +75,6 @@ export default class BookingStore {
     createBooking = async (booking: Booking) => {
 
         this.loading = true;
-        booking.id = uuid();
-        console.log('inside create')
-        console.log(booking)
         try {
             //await agent.Bookings.create(booking);
             await axios

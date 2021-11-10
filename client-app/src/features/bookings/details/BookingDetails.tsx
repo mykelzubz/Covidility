@@ -1,14 +1,21 @@
-import React from "react";
+import { observer } from "mobx-react-lite";
+import React, { useEffect } from "react";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import { Button, Card, Label } from "semantic-ui-react";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { useStore } from "../../../app/stores/store";
 
-export default function BookingDetails() {
+export default observer(function BookingDetails() {
+  const { bookingStore } = useStore();
+  const { selectedBooking: booking, loadBooking, loading } = bookingStore;
+  const { id } = useParams<{ id: string }>();
 
-  const {bookingStore} = useStore();
-  const {selectedBooking: booking} = bookingStore;
+  useEffect(() => {
+    if (id) loadBooking(id);
+  }, [id, loadBooking]);
 
-  if(!booking) return <LoadingComponent content='Loading...' />;
+  if (loading || !booking) return <LoadingComponent content="Loading..." />;
 
   return (
     <Card fluid>
@@ -37,6 +44,8 @@ export default function BookingDetails() {
       </Card.Content>
       <Card.Content extra>
         <Button
+          as={Link}
+          to="/bookings"
           basic
           floated="right"
           color="red"
@@ -44,11 +53,7 @@ export default function BookingDetails() {
         />
 
         {booking.bookingStatus === "PENDING" ? (
-          <Button
-            floated="right"
-            color="red"
-            content="Cancel Booking"
-          />
+          <Button floated="right" color="red" content="Cancel Booking" />
         ) : (
           ""
         )}
@@ -57,4 +62,4 @@ export default function BookingDetails() {
       </Card.Content>
     </Card>
   );
-}
+});
