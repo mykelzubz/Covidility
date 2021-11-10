@@ -1,20 +1,13 @@
+import { observer } from "mobx-react-lite";
 import React, { ChangeEvent, useState } from "react";
 import { Button, Form, Segment } from "semantic-ui-react";
 import { Booking } from "../../../app/models/booking";
+import { useStore } from "../../../app/stores/store";
 
-interface Props {
-  booking: Booking | undefined;
-  closeForm: () => void;
-  createBooking: (booking: Booking) => void;
-  submitting: boolean;
-}
+export default observer( function BookingForm() {
 
-export default function BookingForm({
-  booking: selectedBooking,
-  closeForm,
-  createBooking,
-  submitting
-}: Props) {
+  const {bookingStore} = useStore();
+  const {selectedBooking, closeForm, createBooking, loading} = bookingStore;
   const initialState = selectedBooking ?? {
     id: "",
     firstName: "",
@@ -92,8 +85,8 @@ export default function BookingForm({
           type="button"
           content="Cancel"
         />
-        <Button loading={submitting} floated="right" positive type="submit" content="Submit" />
+        <Button loading={loading} floated="right" positive type="submit" content="Submit" />
       </Form>
     </Segment>
   );
-}
+});

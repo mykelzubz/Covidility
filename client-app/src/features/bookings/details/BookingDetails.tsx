@@ -1,17 +1,15 @@
 import React from "react";
 import { Button, Card, Label } from "semantic-ui-react";
-import { Booking } from "../../../app/models/booking";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { useStore } from "../../../app/stores/store";
 
-interface Props {
-  booking: Booking;
-  cancelSelectBooking: () => void;
-  openForm: (id: string) => void;
-}
+export default function BookingDetails() {
 
-export default function BookingDetails({
-  booking,
-  cancelSelectBooking,
-}: Props) {
+  const {bookingStore} = useStore();
+  const {selectedBooking: booking, openForm, cancelSelectedBooking} = bookingStore;
+
+  if(!booking) return <LoadingComponent content='No booking...' />;
+
   return (
     <Card fluid>
       <Card.Content>
@@ -39,7 +37,7 @@ export default function BookingDetails({
       </Card.Content>
       <Card.Content extra>
         <Button
-          onClick={cancelSelectBooking}
+          onClick={cancelSelectedBooking}
           basic
           floated="right"
           color="red"
