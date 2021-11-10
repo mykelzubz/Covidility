@@ -16,7 +16,7 @@ export default class BookingStore {
     }
 
     get bookingsByDate() {
-        return Array.from(this.bookingRegistry.values()).sort((a,b) => 
+        return Array.from(this.bookingRegistry.values()).sort((a, b) =>
             Date.parse(a.bookingDate) - Date.parse(b.bookingDate));
     }
 
@@ -25,8 +25,7 @@ export default class BookingStore {
             const bookings = await agent.Bookings.list();
 
             bookings.forEach((booking) => {
-                booking.testDate = booking.testDate.split("T")[0];
-                this.bookingRegistry.set(booking.id, booking);
+                this.setBooking(booking);
             });
             this.setLoadingInitial(false);
 
@@ -39,28 +38,37 @@ export default class BookingStore {
         }
     }
 
+    loadBooking = async (id: string) => {
+        let booking = this.getBooking(id);
+        if(booking) {
+            this.selectedBooking = booking;
+        } else {
+            this.loadingInitial = true;
+            try {
+                booking = await agent.Bookings.details(id);
+                this.setBooking(booking);
+                this.setLoadingInitial(false)
+            } catch(error) {
+                console.log(error);
+                this.setLoadingInitial(false)
+            }
+        }
+    }
+
+    private setBooking = (booking: Booking) => {
+        booking.testDate = booking.testDate.split("T")[0];
+        this.bookingRegistry.set(booking.id, booking);
+    }
+
+    private getBooking = (id: string) => {
+        return this.bookingRegistry.get(id);
+    }
+
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
     }
 
-    selectBooking = (id: string) => {
-        this.selectedBooking = this.bookingRegistry.get(id);
-    }
-
-    cancelSelectedBooking = () => {
-        this.selectedBooking = undefined;
-    }
-
-    openForm = (id?: string) => {
-        id ? this.selectBooking(id) : this.cancelSelectedBooking();
-        this.editMode = true;
-    }
-
-    closeForm = () => {
-        this.editMode = false;
-    }
-
-    createBooking = async (booking: Booking) => {        
+    createBooking = async (booking: Booking) => {
 
         this.loading = true;
         booking.id = uuid();
@@ -77,7 +85,7 @@ export default class BookingStore {
                     console.log(error);
                 });
             runInAction(() => {
-                this.bookingRegistry.set(booking.id,booking);
+                this.bookingRegistry.set(booking.id, booking);
                 this.selectedBooking = booking;
                 this.editMode = false;
                 this.loading = false;

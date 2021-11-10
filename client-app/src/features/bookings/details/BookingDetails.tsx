@@ -6,9 +6,9 @@ import { useStore } from "../../../app/stores/store";
 export default function BookingDetails() {
 
   const {bookingStore} = useStore();
-  const {selectedBooking: booking, openForm, cancelSelectedBooking} = bookingStore;
+  const {selectedBooking: booking} = bookingStore;
 
-  if(!booking) return <LoadingComponent content='No booking...' />;
+  if(!booking) return <LoadingComponent content='Loading...' />;
 
   return (
     <Card fluid>
@@ -37,7 +37,6 @@ export default function BookingDetails() {
       </Card.Content>
       <Card.Content extra>
         <Button
-          onClick={cancelSelectedBooking}
           basic
           floated="right"
           color="red"

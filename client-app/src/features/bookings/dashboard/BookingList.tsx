@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button, Item, Label, Segment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 
@@ -25,7 +26,7 @@ export default observer( function BookingList() {
                 <div><strong>Test Result:</strong> {booking.result}</div>
               </Item.Description> */}
               <Item.Extra>
-                <Button onClick={() => bookingStore.selectBooking(booking.id)} floated="right" content="View" color="black"></Button>
+                <Button as={Link} to={`/bookings/${booking.id}`} floated="right" content="View" color="black"></Button>
                 <Label basic content={booking.bookingStatus} />
               </Item.Extra>
             </Item.Content>

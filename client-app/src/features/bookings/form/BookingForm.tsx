@@ -7,7 +7,7 @@ import { useStore } from "../../../app/stores/store";
 export default observer( function BookingForm() {
 
   const {bookingStore} = useStore();
-  const {selectedBooking, closeForm, createBooking, loading} = bookingStore;
+  const {selectedBooking, createBooking, loading} = bookingStore;
   const initialState = selectedBooking ?? {
     id: "",
     firstName: "",
@@ -80,7 +80,6 @@ export default observer( function BookingForm() {
         />
 
         <Button
-          onClick={closeForm}
           floated="right"
           type="button"
           content="Cancel"

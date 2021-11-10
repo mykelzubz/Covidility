@@ -9,41 +9,20 @@ import LoadingComponent from "./LoadingComponent";
 import axios from "axios";
 import { useStore } from "../stores/store";
 import { observer } from "mobx-react-lite";
+import { Route } from "react-router";
+import HomePage from "../../features/home/HomePage";
+import BookingForm from "../../features/bookings/form/BookingForm";
+import BookingDetails from "../../features/bookings/details/BookingDetails";
 
 function App() {
-
-  const {bookingStore} = useStore();
-
-  const [bookings, setBookings] = useState<Booking[]>([]);
-  const [submitting, setSubmitting] = useState(false);
-
-  useEffect(() => {
-    bookingStore.loadBookings();
-  }, [bookingStore]);
-
-  // function handleCreateBooking(booking: Booking) {
-
-  //   axios
-  //     .post("http://localhost:5000/api/Booking", booking)
-  //     .then(function (response) {
-  //       setBookings([...bookings, booking]);
-  //       setSelectedBooking(booking);
-  //       setEditMode(false);
-  //       setSubmitting(false);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }
-
-  if (bookingStore.loadingInitial) return <LoadingComponent content="Loading app..." />;
-
   return (
     <>
       <NavBar />
       <Container style={{ marginTop: "7em" }}>
-
-        <BookingDashboard />
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/bookings" component={BookingDashboard} />
+        <Route path="/bookings/:id" component={BookingDetails} />
+        <Route path="/createBooking" component={BookingForm} />
       </Container>
     </>
   );

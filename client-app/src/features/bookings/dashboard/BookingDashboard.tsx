@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid } from "semantic-ui-react";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { Booking } from "../../../app/models/booking";
 import { useStore } from "../../../app/stores/store";
 import BookingDetails from "../details/BookingDetails";
@@ -11,6 +12,13 @@ export default observer( function BookingDashboard() {
 
   const {bookingStore} = useStore();
   const {selectedBooking, editMode} = bookingStore;
+
+  useEffect(() => {
+    bookingStore.loadBookings();
+  }, [bookingStore]);
+
+  if (bookingStore.loadingInitial) return <LoadingComponent content="Loading app..." />;
+  
   return (
     <Grid>
       <Grid.Column width="7">
