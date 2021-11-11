@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Core;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +13,9 @@ namespace Application.Bookings
 {
     public class List
     {
-        public class Query : IRequest<List<Booking>>{}
+        public class Query : IRequest<Result<List<Booking>>>{}
 
-        public class Handler : IRequestHandler<Query, List<Booking>>
+        public class Handler : IRequestHandler<Query, Result<List<Booking>>>
         {
             private readonly DataContext _context;
             public Handler(DataContext context)
@@ -22,9 +23,9 @@ namespace Application.Bookings
                 _context = context;
             }
 
-            public async Task<List<Booking>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<Booking>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Bookings.ToListAsync();
+                return Result<List<Booking>>.Success( await _context.Bookings.ToListAsync());
             }
         }
     }

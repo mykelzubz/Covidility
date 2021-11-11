@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Core;
 using Domain;
 using MediatR;
 using Persistence;
@@ -11,12 +12,12 @@ namespace Application.Bookings
 {
     public class Details
     {
-        public class Query : IRequest<Booking>
+        public class Query : IRequest<Result<Booking>>
         {
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Booking>
+        public class Handler : IRequestHandler<Query, Result<Booking>>
         {
             private readonly DataContext _context;
             public Handler(DataContext context)
@@ -24,9 +25,11 @@ namespace Application.Bookings
                 _context = context;
             }
 
-            public async Task<Booking> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<Booking>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Bookings.FindAsync(request.Id);
+                var booking = await _context.Bookings.FindAsync(request.Id);
+
+                return Result<Booking>.Success(booking);
             }
         }
     }

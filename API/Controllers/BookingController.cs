@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Bookings;
+using Application.Core;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -24,19 +25,19 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Booking>>> GetBookings()
         {
-            return await _mediator.Send(new List.Query());
+            return HandleResult(await _mediator.Send(new List.Query()));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Booking>> GetBooking(Guid id)
+        public async Task<IActionResult> GetBooking(Guid id)
         {
-            return await _mediator.Send(new Details.Query{Id = id});
+            return HandleResult(await _mediator.Send(new Details.Query { Id = id }));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateBooking(Booking booking)
         {
-            return Ok(await _mediator.Send(new Create.Command{Booking = booking}));
+            return HandleResult(await _mediator.Send(new Create.Command { Booking = booking }));
         }
 
         [HttpPut("{id}")]
@@ -44,7 +45,19 @@ namespace API.Controllers
         {
             booking.Id = id;
 
-            return Ok(await _mediator.Send(new Edit.Command{Booking = booking}));
+            return HandleResult(await _mediator.Send(new Edit.Command { Booking = booking }));
+        }
+
+        protected ActionResult HandleResult<T>(Result<T> result)
+        {
+            if (result == null) return NotFound();
+
+            if (result.IsSuccess && result.Value != null)
+                return Ok(result.Value);
+            if (result.IsSuccess && result.Value == null)
+                return NotFound();
+            return BadRequest(result.Error);
+
         }
     }
 }
