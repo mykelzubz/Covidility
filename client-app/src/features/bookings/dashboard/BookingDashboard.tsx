@@ -14,7 +14,7 @@ export default observer( function BookingDashboard() {
     if(bookingRegistry.size <= 1) loadBookings();
   }, [bookingRegistry.size, loadBookings]);
 
-  if (bookingStore.loadingInitial) return <LoadingComponent content="Loading app..." />;
+  if (bookingStore.loadingInitial) return <LoadingComponent content="Loading bookings..." />;
 
   return (
     <Grid>

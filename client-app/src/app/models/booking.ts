@@ -5,7 +5,7 @@ export interface Booking {
     email: string;
     testType: string;
     location: string;
-    testDate: string;
+    testDate: Date | null;
     result: string;
     bookingStatus: string;
     bookingDate: string;

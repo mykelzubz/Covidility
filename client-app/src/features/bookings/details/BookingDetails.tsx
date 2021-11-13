@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
@@ -29,7 +30,7 @@ export default observer(function BookingDetails() {
             <strong>Location:</strong> {booking.location}
           </div>
           <div>
-            <strong>Test Date:</strong> {booking.testDate}
+            <strong>Test Date:</strong> {format(booking.testDate!, 'yyyy-MM-dd')}
           </div>
           <div>
             <strong>Test Type:</strong> {booking.testType}

@@ -8,7 +8,7 @@ export default class BookingStore {
     selectedBooking: Booking | undefined = undefined;
     editMode = false;
     loading = false;
-    loadingInitial = true;
+    loadingInitial = false;
 
     constructor() {
         makeAutoObservable(this)
@@ -21,6 +21,7 @@ export default class BookingStore {
 
     loadBookings = async () => {
         try {
+            this.setLoadingInitial(true);
             const bookings = await agent.Bookings.list();
 
             bookings.forEach((booking) => {
@@ -43,24 +44,26 @@ export default class BookingStore {
             this.selectedBooking = booking;
             return booking;
         } else {
-            this.loadingInitial = true;
+            //this.loadingInitial = true;
+            this.setLoadingInitial(true);
             try {
                 booking = await agent.Bookings.details(id);
                 this.setBooking(booking);
                 runInAction(() => {
                     this.selectedBooking = booking;
                 });                
-                this.setLoadingInitial(false)
+                this.setLoadingInitial(false);
                 return booking;
             } catch(error) {
                 console.log(error);
-                this.setLoadingInitial(false)
+                this.setLoadingInitial(false);
             }
         }
     }
 
     private setBooking = (booking: Booking) => {
-        booking.testDate = booking.testDate.split("T")[0];
+        const dateString = new Date(booking.testDate!).toISOString().split('T')[0]; //format(booking.testDate!, 'yyyy-MM-dd');
+        booking.testDate = new Date(dateString) //booking.testDate.split("T")[0];
         this.bookingRegistry.set(booking.id, booking);
     }
 
