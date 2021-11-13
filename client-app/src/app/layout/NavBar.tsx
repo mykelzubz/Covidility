@@ -12,6 +12,7 @@ export default function NavBar() {
                     Covidility
                 </Menu.Item>
                 <Menu.Item as={NavLink} to='/bookings' name='Bookings' />
+                <Menu.Item as={NavLink} to='/errors' name='Erros' />
                 <Menu.Item>
                     <Button as={NavLink} to='/createBooking' positive content='Book Test' />
                 </Menu.Item>
