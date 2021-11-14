@@ -14,5 +14,7 @@ namespace Persistence
         }
 
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<LocationDistribution> LocationDistributions { get; set; }
     }
 }

@@ -9,13 +9,13 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace Application.Bookings
+namespace Application.Locations
 {
     public class List
     {
-        public class Query : IRequest<Result<List<Booking>>>{}
+        public class Query : IRequest<Result<List<Location>>>{}
 
-        public class Handler : IRequestHandler<Query, Result<List<Booking>>>
+        public class Handler : IRequestHandler<Query, Result<List<Location>>>
         {
             private readonly DataContext _context;
             public Handler(DataContext context)
@@ -23,13 +23,11 @@ namespace Application.Bookings
                 _context = context;
             }
 
-            public async Task<Result<List<Booking>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<Location>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return Result<List<Booking>>.Success( 
-                    await _context.Bookings
-                        .Include(x => x.Location)
-                        .ToListAsync());
+                return Result<List<Location>>.Success(  await _context.Locations.ToListAsync());
             }
         }
+        
     }
 }

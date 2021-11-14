@@ -15,7 +15,7 @@ namespace Application.Bookings
                 RuleFor(x => x.LastName).NotEmpty();
                 RuleFor(x => x.Email).NotEmpty().EmailAddress();
                 RuleFor(x => x.TestType).NotEmpty();
-                RuleFor(x => x.Location).NotEmpty();
+                RuleFor(x => x.LocationId).NotEmpty();
                 RuleFor(x => x.TestDate).NotEmpty();
                 RuleFor(x => x.BookingStatus).NotEmpty();
                 RuleFor(x => x.BookingDate).NotEmpty();

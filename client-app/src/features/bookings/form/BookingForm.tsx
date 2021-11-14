@@ -39,7 +39,7 @@ export default observer(function BookingForm() {
     email: Yup.string().required("Email is required").email(),
     testType: Yup.string().required("Test Type is required"),
     location: Yup.string().required("Location is required"),
-    testDate: Yup.date().required("Test Date is required").nullable(),
+    testDate: Yup.date().required("Test Date is required").nullable()
   });
 
   function handleFormSubmit(booking: Booking) {

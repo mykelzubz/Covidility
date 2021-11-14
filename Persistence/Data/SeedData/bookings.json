@@ -1,0 +1,39 @@
+[
+  {
+    "FirstName": "MICHAEL",
+    "LastName": "ONYIRIMBA",
+    "Email": "mike@mike.com",
+    "TestType": "PCR",
+    "LocationId": "3AF192D8-01FD-415B-BEC6-6C6E8D561558",
+    "TestDate": "2021-11-25",
+    "Result": "NEGATIVE",
+    "BookingStatus": "COMPLETED"
+  },
+  {
+    "FirstName": "MOSES",
+    "LastName": "ELIJA",
+    "Email": "a@b.com",
+    "TestType": "RAPID TEST",
+    "LocationId": "3AF192D8-01FD-415B-BEC6-6C6E8D561558",
+    "TestDate": "2021-11-25",
+    "BookingStatus": "PENDING"
+  },
+  {
+    "FirstName": "IBRAHIM",
+    "LastName": "ABUBAKAR",
+    "Email": "i@a.com",
+    "TestType": "RAPID TEST",
+    "LocationId": "700DAC86-C956-4809-A11E-8EA6664CFB31",
+    "TestDate": "2021-11-22",
+    "BookingStatus": "PENDING"
+  },
+  {
+    "FirstName": "NONSO",
+    "LastName": "OBI",
+    "Email": "n@o.com",
+    "TestType": "RAPID TEST",
+    "LocationId": "F3915650-4E51-4B02-AD8A-CCEBFBDE6C53",
+    "TestDate": "2021-11-27",
+    "BookingStatus": "PENDING"
+  }
+]

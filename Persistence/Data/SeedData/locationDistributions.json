@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "720ED0E4-82F0-4271-AB40-79BCE2A18398",
+    "LocationId": "3AF192D8-01FD-415B-BEC6-6C6E8D561558",
+    "TestDate": "2021-11-25",
+    "AvailableSlots": 8
+  },
+  {
+    "Id": "49463575-4DE3-4287-98B2-BD07E94829D2",
+    "LocationId": "F3915650-4E51-4B02-AD8A-CCEBFBDE6C53",
+    "TestDate": "2021-11-27",
+    "AvailableSlots": 5
+  },
+  {
+    "Id": "4A78A7B3-A738-4BE9-AF11-CD3DA499F94F",
+    "LocationId": "3AF192D8-01FD-415B-BEC6-6C6E8D561558",
+    "TestDate": "2021-11-30",
+    "AvailableSlots": 6
+  },
+  {
+    "Id": "6C531B37-4BCA-4F17-82AA-F067812C93AA",
+    "LocationId": "700DAC86-C956-4809-A11E-8EA6664CFB31",
+    "TestDate": "2021-11-22",
+    "AvailableSlots": 2
+  }
+]

@@ -14,7 +14,6 @@ using Microsoft.OpenApi.Models;
 using Persistence;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
-using Application.Bookings;
 using Application.Core;
 using FluentValidation.AspNetCore;
 using API.Middleware;
@@ -34,7 +33,10 @@ namespace API
         {
 
             services.AddControllers().AddFluentValidation(config => {
-                config.RegisterValidatorsFromAssemblyContaining<Create>();
+                config.RegisterValidatorsFromAssemblyContaining<Application.Bookings.Create>();
+            });
+            services.AddControllers().AddFluentValidation(config => {
+                config.RegisterValidatorsFromAssemblyContaining<Application.Locations.Create>();
             });
             services.AddSwaggerGen(c =>
             {
@@ -52,7 +54,8 @@ namespace API
                 });
             });
 
-            services.AddMediatR(typeof(List.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Bookings.List.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Locations.List.Handler).Assembly);
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
         }
 

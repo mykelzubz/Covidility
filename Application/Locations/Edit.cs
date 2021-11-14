@@ -10,20 +10,20 @@ using FluentValidation;
 using MediatR;
 using Persistence;
 
-namespace Application.Bookings
+namespace Application.Locations
 {
     public class Edit
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public Booking Booking { get; set; }
+            public Location Location { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
-                RuleFor(x => x.Booking).SetValidator(new BookingValidator());
+                RuleFor(x => x.Location).SetValidator(new LocationValidator());
             }
         }
 
@@ -40,18 +40,19 @@ namespace Application.Bookings
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var booking = await _context.Bookings.FindAsync(request.Booking.Id);
+                var location = await _context.Locations.FindAsync(request.Location.Id);
 
-                if(booking == null) return null;
+                if(location == null) return null;
 
-                _mapper.Map(request.Booking, booking);
+                _mapper.Map(request.Location, location);
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if(!result) return Result<Unit>.Failure("Failed to update booking");
+                if(!result) return Result<Unit>.Failure("Failed to update location");
 
                 return Result<Unit>.Success(Unit.Value);
             }
         }
+        
     }
 }

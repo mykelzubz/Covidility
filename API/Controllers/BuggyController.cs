@@ -5,6 +5,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class BuggyController : ControllerBase
     {
         [HttpGet("not-found")]

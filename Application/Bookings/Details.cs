@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Application.Core;
 using Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Bookings
@@ -27,7 +28,9 @@ namespace Application.Bookings
 
             public async Task<Result<Booking>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var booking = await _context.Bookings.FindAsync(request.Id);
+                var booking = await _context.Bookings
+                                        .Include(x => x.Location)
+                                        .FirstOrDefaultAsync(p => p.Id == request.Id);
 
                 return Result<Booking>.Success(booking);
             }

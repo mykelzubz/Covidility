@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Booking } from "../models/booking";
 import axios from "axios";
+import { Console } from "console";
 
 export default class BookingStore {
     bookingRegistry = new Map<string, Booking>();
@@ -78,16 +79,21 @@ export default class BookingStore {
     createBooking = async (booking: Booking) => {
 
         this.loading = true;
+        console.log('the payload');
+        console.log(booking);
         try {
-            //await agent.Bookings.create(booking);
-            await axios
-                .post("http://localhost:5000/api/Booking", booking)
-                .then(function (response) {
+            await agent.Bookings.create(booking).catch(function (error) {
+                        console.log(error);
+                    });
+            // await axios
+            //     .post("http://localhost:5000/api/Booking", booking)
+            //     .then(function (response) {
 
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+            //     })
+            //     .catch(function (error) {
+            //         console.log(error);
+            //     });
+
             runInAction(() => {
                 this.bookingRegistry.set(booking.id, booking);
                 this.selectedBooking = booking;

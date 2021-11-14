@@ -12,6 +12,7 @@ namespace Application.Core
         public MappingProfiles()
         {
             CreateMap<Booking, Booking>();
+            CreateMap<Location, Location>();
         }
     }
 }
